@@ -1,5 +1,7 @@
 # ISSUE
 
+- https://github.com/rami2076/kotlin-on-spring-boot/issues/1
+
 # 対応内容
 
 # 動作確認
