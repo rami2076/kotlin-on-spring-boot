@@ -1,0 +1,13 @@
+api:
+  base-path: api
+
+server:
+  servlet:
+    context-path: /rami
+
+# http://localhost:8080/rami/api-docs
+# http://localhost:8080/rami/swagger-ui/index.html
+springdoc:
+  api-docs:
+    path: /api-docs
+  show-actuator: true
