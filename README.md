@@ -16,21 +16,22 @@ To save time, test step excluded from the build task.
 If other tasks also fail related to ktlint, use the -x option to exclude them.
 
 ```shell
-# Build
 gradlew build -x runKtlintCheckOverMainSourceSet -x test
 ```
 
 ### Formatter
 
+Set kotlin formatter for IntelliJ.
+
 ```shell
-# Set kotlin formatter for IntelliJ
 gradlew ktlintApplyToIdea
 ```
 
 ###  Up Container
 
+Init datasource.
+
 ```bash
-# Init datasource
 docker-compose -f docker-compose.yaml -p kotlin-on-spring-boot up -d
 ```
 
@@ -58,5 +59,6 @@ docker-compose down
 
 ## Swagger
 
+### Local
+
 [Swagger-UI](http://localhost:8080/rami/swagger-ui/index.html)
-ß
