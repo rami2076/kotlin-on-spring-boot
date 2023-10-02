@@ -8,19 +8,30 @@ Sample of Kotlin on Spring Boot.
 
 ### Build
 
-`gradle build` is deprecate. Instead of `gradlew build -x runKtlintCheckOverMainSourceSet -x test`
+`gradlew build` is deprecate. Instead of `gradlew build -x runKtlintCheckOverMainSourceSet -x test`
 Cause: gradle-ktlint has bug.
 Issue: https://github.com/JLLeitschuh/ktlint-gradle/issues/579
 Note:
-To save time, test step excluded from the build task.
+To save time, test step excluded from the build task.  
 If other tasks also fail related to ktlint, use the -x option to exclude them.
 
 ```shell
-# Build
 gradlew build -x runKtlintCheckOverMainSourceSet -x test
-# Set kotlin formatter for IntelliJ
+```
+
+### Formatter
+
+Set kotlin formatter for IntelliJ.
+
+```shell
 gradlew ktlintApplyToIdea
-# Init datasource
+```
+
+###  Up Container
+
+Init datasource.
+
+```bash
 docker-compose -f docker-compose.yaml -p kotlin-on-spring-boot up -d
 ```
 
@@ -47,5 +58,7 @@ docker-compose down
 ```
 
 ## Swagger
+
+### Local
 
 [Swagger-UI](http://localhost:8080/rami/swagger-ui/index.html)
