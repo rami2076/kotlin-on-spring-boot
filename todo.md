@@ -8,7 +8,7 @@
 
 ## GitHub Actions
 
-- [ ] CICDの内、mainブランチにPRするタイミングでテストを実施すること
+- [x] CICDの内、mainブランチにPRするタイミングでテストを実施すること
 
 ## Code generation
 
@@ -22,9 +22,10 @@
 - [ ] 調査と適応
   [For Kotlin](https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.lombok)
 
-## lombok
+## database setting
 
-- [ ] 調査と適応
+- [x] 文字列の設定
+- [x] 時間の設定
 
 ## Feature
 
