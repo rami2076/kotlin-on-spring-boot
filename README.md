@@ -52,6 +52,17 @@ gradlew ktlintCheck
 
 ### Test
 
+#### For Test File
+
+Case Windows: Use git-bash.
+
+```shell
+touch $HOME/.testcontainers.properties
+echo "testcontainers.reuse.enable=true" > $HOME/.testcontainers.properties
+```
+
+#### Execute
+
 When not work test, then run build command.
 
 ```shell

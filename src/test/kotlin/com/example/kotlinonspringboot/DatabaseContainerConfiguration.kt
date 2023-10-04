@@ -17,14 +17,21 @@ abstract class DatabaseContainerConfiguration {
             withUsername("myuser")
             withPassword("secret")
             withInitScript("datasource/init_ddl.sql")
+            // コンテナの再利用の設定としてwithReuse(true)+$HOME/.testcontainers.propertiesを作成したが、
+            // 複数クラスでコンテナを利用する場合 Failed to validate connectionのメッセージが出力され状況が改善しないので
+            // テストコンテナを使うテストクラスは一つにすることで問題を回避
+            // 以下で対応できそうではある
+            // https://danielme.com/2023/04/13/testing-spring-boot-docker-with-testcontainers-and-junit-5-mysql-and-other-images/
         }
 
         @JvmStatic
         @DynamicPropertySource
         fun properties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", mysqlContainer::getJdbcUrl)
-            registry.add("spring.datasource.password", mysqlContainer::getPassword)
-            registry.add("spring.datasource.username", mysqlContainer::getUsername)
+            registry.run {
+                add("spring.datasource.url", mysqlContainer::getJdbcUrl)
+                add("spring.datasource.password", mysqlContainer::getPassword)
+                add("spring.datasource.username", mysqlContainer::getUsername)
+            }
         }
     }
 }

@@ -26,7 +26,27 @@ class EmployeeSearchController : EmployeeSearchApi {
                 emailAddress = "email@address1.example"
             )
         )
-        val response = EmployeeSearchResponse(employees = employees, total = BigDecimal.valueOf(2))
+        val response = EmployeeSearchResponse(
+            employees = employees,
+            total = BigDecimal.valueOf(2)
+        )
+
+        return ResponseEntity(response, HttpStatus.OK)
+    }
+
+    override fun get(employeeNumber: BigDecimal): ResponseEntity<EmployeeSearchResponse> {
+        val employees = listOf(
+            Employee(
+                employeeNumber = BigDecimal.valueOf(1),
+                fullName = "test1",
+                age = BigDecimal.ZERO,
+                emailAddress = "email@address1.example"
+            )
+        )
+        val response = EmployeeSearchResponse(
+            employees = employees,
+            total = BigDecimal.valueOf(1)
+        )
 
         return ResponseEntity(response, HttpStatus.OK)
     }
