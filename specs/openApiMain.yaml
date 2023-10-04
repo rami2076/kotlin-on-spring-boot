@@ -26,6 +26,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmployeeSearchResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
     post:
       tags:
         - EmployeeUpdate
@@ -42,6 +48,18 @@ paths:
       responses:
         201:
           description: Created
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
 
     put:
       tags:
@@ -59,6 +77,18 @@ paths:
       responses:
         204:
           description: No Content
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
 
   /v1/employee/{employeeNumber}:
     delete:
@@ -74,9 +104,24 @@ paths:
           required: true
           schema:
             type: number
+            maximum: 999999999
+            minimum: 0
       responses:
         204:
           description: No Content
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
     get:
       tags:
         - EmployeeSearch
@@ -90,6 +135,8 @@ paths:
           required: true
           schema:
             type: number
+            maximum: 999999999
+            minimum: 0
       responses:
         '200':
           description: 単一のレスポンス結果を返却する．totalの値は1または0となる．
@@ -97,6 +144,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmployeeSearchResponse'
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
 components:
   schemas:
     Employee:
@@ -109,12 +169,22 @@ components:
       properties:
         employee_number:
           type: number
+          maximum: 999999999
+          minimum: 0
         full_name:
           type: string
+          maxLength: 100
+          minLength: 2
         age:
           type: number
+          maximum: 200
+          minimum: 0
         email_address:
           type: string
+          format: email
+          maxLength: 254
+          minLength: 10
+
     EmployeeSearchResponse:
       required:
         - employees
@@ -136,10 +206,17 @@ components:
       properties:
         full_name:
           type: string
+          maxLength: 100
+          minLength: 2
         age:
           type: number
+          maximum: 200
+          minimum: 0
         email_address:
           type: string
+          format: email
+          maxLength: 254
+          minLength: 10
     EmployeeUpdateRequest:
       required:
         - employee
@@ -147,3 +224,10 @@ components:
       properties:
         employee:
           $ref: '#/components/schemas/Employee'
+    EmployeeServiceErrorResponse:
+      required:
+        - message
+      type: object
+      properties:
+        message:
+          type: string
