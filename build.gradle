@@ -102,16 +102,14 @@ jar {
 }
 
 openApiValidate {
-    inputSpec.set("$rootDir/specs/petstore.yaml")
+    inputSpec.set("$rootDir/specs/employee.yaml")
 }
 
 //https://openapi-generator.tech/docs/generators/kotlin-spring/
 openApiGenerate {
     generatorName.set("kotlin-spring")
-    inputSpec.set("$rootDir/specs/petstore.yaml")
-    outputDir.set("$rootDir/build/generated")
-    apiPackage.set("com.example.kotlinonspringboot.presentation.api")
-    modelPackage.set("com.example.kotlinonspringboot.presentation.model")
+    outputDir.set("$rootDir/generated")
+    inputSpec.set("$rootDir/specs/employee.yaml")
     configOptions.set([
             additionalModelTypeAnnotations   : "null",
             annotationLibrary                : "swagger2",
