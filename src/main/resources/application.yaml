@@ -11,3 +11,9 @@ springdoc:
   api-docs:
     path: /api-docs
   show-actuator: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydatabase
+    password: secret
+    username: myuser
