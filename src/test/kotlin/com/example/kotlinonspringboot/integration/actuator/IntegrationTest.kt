@@ -11,8 +11,8 @@ class IntegrationTest {
     @Test
     fun exampleTest(@Autowired webClient: WebTestClient) {
         webClient
-            .get().uri("/actuator/health")
-            .exchange()
-            .expectStatus().isOk
+                .get().uri("/actuator/health")
+                .exchange()
+                .expectStatus().isOk
     }
 }
