@@ -8,7 +8,7 @@ Sample of Kotlin on Spring Boot.
 
 ### Build
 
-`gradlew build` is deprecate. Instead of `gradlew build -x runKtlintCheckOverMainSourceSet -x test`
+`gradlew build` is deprecate. Instead of `gradlew clean build -x runKtlintCheckOverMainSourceSet -x test`
 Cause: gradle-ktlint has bug.
 Issue: https://github.com/JLLeitschuh/ktlint-gradle/issues/579
 Note:
@@ -16,7 +16,7 @@ To save time, test step excluded from the build task.
 If other tasks also fail related to ktlint, use the -x option to exclude them.
 
 ```shell
-gradlew build -x runKtlintCheckOverMainSourceSet -x test
+gradlew clean build -x runKtlintCheckOverMainSourceSet -x test
 ```
 
 ### Formatter
@@ -27,7 +27,7 @@ Set kotlin formatter for IntelliJ.
 gradlew ktlintApplyToIdea
 ```
 
-###  Up Container
+### Up Container
 
 Init datasource.
 

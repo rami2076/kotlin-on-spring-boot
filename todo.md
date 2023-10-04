@@ -8,11 +8,12 @@
 
 ## GitHub Actions
 
-- [x] CICDの内、mainブランチにPRするタイミングでテストを実施すること
+- [x] CI/CDの内、mainブランチにPRするタイミングでテストを実施すること
 
 ## Code generation
 
 - [x] 調査と適応
+- [ ] 設定を全てgradleに記述
 
 [Frontend and Backend](https://qiita.com/takahashik0422/items/0e6ca3ca18d76713222a)
 [openapi-generator-sample](https://github.com/Msksgm/openapi-generator-sample/tree/main)
@@ -61,8 +62,12 @@ JUnit5による単体テストも実装すること ※ここまでは時間的�
 
 - [ ] バリデーション要件決め
   - [x] 文字数
-  - [ ] 文字種
-  - [ ] ドキュメントにまとめる
+  - [x] 文字種
+  - [x] ドキュメントにまとめる
 - [x] GitHubTemplateを追加
   - [x] 動作確認
+- [ ] openapiのyamlを設定して5つの正常形が動作するように変更する
+- [ ] openapiでエラー判定のユースケースを設定する
+- [ ] openapiでエラーハンドラーの設定を行う．もしくは自前のエラーハンドラを設定する．
+
 
