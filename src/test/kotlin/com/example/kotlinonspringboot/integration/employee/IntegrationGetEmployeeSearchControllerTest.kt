@@ -15,8 +15,8 @@ class IntegrationGetEmployeeSearchControllerTest {
     @DisplayName("")
     fun exampleTest(@Autowired webClient: WebTestClient) {
         webClient
-                .get().uri("/rami/api/v1/employee")
-                .exchange()
-                .expectStatus().isOk
+            .get().uri("/rami/api/v1/employee")
+            .exchange()
+            .expectStatus().isOk
     }
 }

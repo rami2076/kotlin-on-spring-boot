@@ -108,7 +108,7 @@ openApiValidate {
 //https://openapi-generator.tech/docs/generators/kotlin-spring/
 openApiGenerate {
     generatorName.set("kotlin-spring")
-    outputDir.set("$rootDir/generated")
+    outputDir.set("$rootDir/build/generated")
     inputSpec.set("$rootDir/specs/employee.yaml")
     configOptions.set([
             additionalModelTypeAnnotations   : "null",
