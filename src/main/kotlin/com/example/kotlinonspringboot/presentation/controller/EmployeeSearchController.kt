@@ -11,9 +11,23 @@ import java.math.BigDecimal
 
 @RestController
 class EmployeeSearchController : EmployeeSearchApi {
+
     override fun list(): ResponseEntity<EmployeeSearchResponse> {
-        val employees = listOf(Employee(BigDecimal.ONE, "name", BigDecimal.ONE, "name"))
-        val response = EmployeeSearchResponse(employees, BigDecimal.ONE)
+        val employees = listOf(
+            Employee(
+                employeeNumber = BigDecimal.valueOf(1),
+                fullName = "test1",
+                age = BigDecimal.ZERO,
+                emailAddress = "email@address1.example"
+            ),
+            Employee(
+                employeeNumber = BigDecimal.valueOf(100),
+                fullName = "test1",
+                age = BigDecimal.ZERO,
+                emailAddress = "email@address1.example"
+            ),
+        )
+        val response = EmployeeSearchResponse(employees = employees, total = BigDecimal.valueOf(2))
 
         return ResponseEntity(response, HttpStatus.OK)
     }
