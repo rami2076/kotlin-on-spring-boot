@@ -13,7 +13,7 @@
 ## Code generation
 
 - [x] 調査と適応
-- [ ] 設定を全てgradleに記述
+- [x] 設定を全てgradleに記述
 
 [Frontend and Backend](https://qiita.com/takahashik0422/items/0e6ca3ca18d76713222a)
 [openapi-generator-sample](https://github.com/Msksgm/openapi-generator-sample/tree/main)

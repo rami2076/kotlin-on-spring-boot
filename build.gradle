@@ -107,22 +107,50 @@ openApiValidate {
 
 //https://openapi-generator.tech/docs/generators/kotlin-spring/
 openApiGenerate {
-    outputDir.set("$rootDir/generated")
     generatorName.set("kotlin-spring")
     inputSpec.set("$rootDir/specs/petstore.yaml")
     outputDir.set("$rootDir/build/generated")
     apiPackage.set("com.example.kotlinonspringboot.presentation.api")
     modelPackage.set("com.example.kotlinonspringboot.presentation.model")
     configOptions.set([
-            useSpringBoot3       : "true",
-            delegatePattern      : "false",
-            documentationProvider: "springdoc",
-            enumPropertyNaming   : "camelCase",
-            exceptionHandler     : "false",
-            interfaceOnly        : "true",
-            modelMutable         : "false",
-            serverPort           : "8080",
-            "useTags"            : "true"
+            additionalModelTypeAnnotations   : "null",
+            annotationLibrary                : "swagger2",
+            apiPackage                       : "com.example.kotlinonspringboot.presentation.api",
+            apiSuffix                        : "Api",
+            artifactId                       : "openapi-spring",
+            artifactVersion                  : "1.0.0",
+            basePackage                      : "com.example.kotlinonspringboot.presentation.openapitools",
+            beanQualifiers                   : "false",
+            configPackage                    : "com.example.kotlinonspringboot.presentation.config",
+            delegatePattern                  : "false",
+            documentationProvider            : "springdoc",
+            enumPropertyNaming               : "camelCase",
+            exceptionHandler                 : "false",
+            gradleBuildFile                  : "true",
+            groupId                          : "org.openapitools",
+            interfaceOnly                    : "true",
+            library                          : "spring-boot",
+            modelMutable                     : "false",
+            modelPackage                     : "com.example.kotlinonspringboot.presentation.model",
+            packageName                      : "org.openapitools",
+            parcelizeModels                  : "null",
+            reactive                         : "false",
+            serializableModel                : "null",
+            serverPort                       : "8080",
+            serviceImplementation            : "false",
+            serviceInterface                 : "false",
+            skipDefaultInterface             : "false",
+            sortModelPropertiesByRequiredFlag: "null",
+            sortParamsByRequiredFlag         : "null",
+            sourceFolder                     : "src/main/kotlin",
+            title                            : "OpenAPI Kotlin Spring",
+            useBeanValidation                : "true",
+            useFeignClientUrl                : "true",
+            useSpringBoot3                   : "true",
+            useSwaggerUI                     : "true",
+            useTags                          : "true"
+
+
     ])
 }
 
