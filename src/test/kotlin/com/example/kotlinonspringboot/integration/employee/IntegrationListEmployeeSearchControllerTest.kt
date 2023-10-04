@@ -13,6 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@DisplayName("全権検索のIT試験")
 class IntegrationListEmployeeSearchControllerTest : DatabaseContainerConfiguration() {
 
     @Nested
