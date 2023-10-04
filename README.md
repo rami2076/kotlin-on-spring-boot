@@ -52,6 +52,12 @@ When not work test, then run build command.
 gradlew test
 ```
 
+### Run command
+
+```shell
+gradlew bootRun
+```
+
 ### Down Container
 
 ```shell
