@@ -28,6 +28,12 @@ Set kotlin formatter for IntelliJ.
 gradlew ktlintApplyToIdea
 ```
 
+### Format
+
+```shell
+gradlew ktlintFormat
+```
+
 ### Up Container
 
 Init datasource.

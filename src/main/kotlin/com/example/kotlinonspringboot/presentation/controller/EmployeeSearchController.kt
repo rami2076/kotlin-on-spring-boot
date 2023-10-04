@@ -1,6 +1,5 @@
 package com.example.kotlinonspringboot.presentation.controller
 
-
 import com.example.kotlinonspringboot.presentation.api.EmployeeSearchApi
 import com.example.kotlinonspringboot.presentation.model.Employee
 import com.example.kotlinonspringboot.presentation.model.EmployeeSearchResponse
@@ -25,7 +24,7 @@ class EmployeeSearchController : EmployeeSearchApi {
                 fullName = "test1",
                 age = BigDecimal.ZERO,
                 emailAddress = "email@address1.example"
-            ),
+            )
         )
         val response = EmployeeSearchResponse(employees = employees, total = BigDecimal.valueOf(2))
 

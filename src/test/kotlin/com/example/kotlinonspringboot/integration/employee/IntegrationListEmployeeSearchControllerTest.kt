@@ -1,6 +1,6 @@
 package com.example.kotlinonspringboot.integration.employee
 
-import com.example.aaaaaaa.DatabaseContainerConfiguration
+import com.example.kotlinonspringboot.DatabaseContainerConfiguration
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -20,10 +20,11 @@ class IntegrationListEmployeeSearchControllerTest : DatabaseContainerConfigurati
     @DisplayName("データベースに登録済み社員が2名登録されている場合")
     @Sql(
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
-        statements = ["""
-        INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (100, 'test1', 0, 'email@address.example');
-        INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (1, 'test1', 0, 'email@address@example')
-     """]
+        statements = [
+            """
+            INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (100, 'test1', 0, 'email@address.example');
+            INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (1, 'test1', 0, 'email@address@example')"""
+        ]
     )
     @Sql(
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD,
@@ -52,23 +53,23 @@ class IntegrationListEmployeeSearchControllerTest : DatabaseContainerConfigurati
                     .exchange()
                     .expectBody().json(
                         """
-                        {
-                          "employees": [
-                            {
-                              "employee_number": 1,
-                              "full_name": "test1",
-                              "age": 0,
-                              "email_address": "email@address1.example"
-                            },
-                            {
-                              "employee_number": 100,
-                              "full_name": "test1",
-                              "age": 0,
-                              "email_address": "email@address1.example"
-                            }
-                          ],
-                          "total": 2
-                        }"""
+                                    {
+                                      "employees": [
+                                        {
+                                          "employee_number": 1,
+                                          "full_name": "test1",
+                                          "age": 0,
+                                          "email_address": "email@address1.example"
+                                        },
+                                        {
+                                          "employee_number": 100,
+                                          "full_name": "test1",
+                                          "age": 0,
+                                          "email_address": "email@address1.example"
+                                        }
+                                      ],
+                                      "total": 2
+                                    }"""
                     )
             }
         }
