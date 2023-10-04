@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
 @RestController
+//@Validated
 class EmployeeSearchController : EmployeeSearchApi {
 
     override fun list(): ResponseEntity<EmployeeSearchResponse> {
