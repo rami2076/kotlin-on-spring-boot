@@ -33,5 +33,4 @@ interface EmployeeRepository {
      * Case not found Employees: Type: Nullable RegisteredEmployee
      */
     fun findByKey(searchPKSearchCondition: SearchCondition.EmployeePKSearchCondition): Employee.RegisteredEmployee?
-
 }
