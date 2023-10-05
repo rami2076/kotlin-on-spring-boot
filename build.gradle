@@ -5,7 +5,6 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.8.22'
     id "org.jlleitschuh.gradle.ktlint" version '11.6.0'
     id "org.jlleitschuh.gradle.ktlint-idea" version '11.6.0'
-
     id "org.openapi.generator" version "7.0.1"
 }
 
@@ -13,6 +12,8 @@ ext {
     mybatisSpringBootStarterVersion = "3.0.2"
     springModulithBomVersion = "1.0.1"
     archunitVersion = '1.1.0'
+    springdocVersion = '2.2.0'
+    mockitoKotlinVersion = '5.1.0'
 }
 
 
@@ -45,7 +46,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
 
 
     //container
@@ -53,6 +54,7 @@ dependencies {
 
     //web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     //data
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootStarterVersion}"
@@ -69,6 +71,8 @@ dependencies {
     testImplementation "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${mybatisSpringBootStarterVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${mockitoKotlinVersion}"
+
 
     //kotlin-module
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
@@ -102,27 +106,51 @@ jar {
 }
 
 openApiValidate {
-    inputSpec.set("$rootDir/specs/petstore.yaml")
+    inputSpec.set("$rootDir/specs/openApiMain.yaml")
 }
 
 //https://openapi-generator.tech/docs/generators/kotlin-spring/
 openApiGenerate {
-    outputDir.set("$rootDir/generated")
     generatorName.set("kotlin-spring")
-    inputSpec.set("$rootDir/specs/petstore.yaml")
     outputDir.set("$rootDir/build/generated")
-    apiPackage.set("com.example.kotlinonspringboot.presentation.api")
-    modelPackage.set("com.example.kotlinonspringboot.presentation.model")
+    inputSpec.set("$rootDir/specs/openApiMain.yaml")
     configOptions.set([
-            useSpringBoot3       : "true",
-            delegatePattern      : "false",
-            documentationProvider: "springdoc",
-            enumPropertyNaming   : "camelCase",
-            exceptionHandler     : "false",
-            interfaceOnly        : "true",
-            modelMutable         : "false",
-            serverPort           : "8080",
-            "useTags"            : "true"
+            additionalModelTypeAnnotations   : "null",
+            annotationLibrary                : "swagger2",
+            apiPackage                       : "com.example.kotlinonspringboot.presentation.api",
+            apiSuffix                        : "Api",
+            artifactId                       : "openapi-spring",
+            artifactVersion                  : "1.0.0",
+            basePackage                      : "com.example.kotlinonspringboot.presentation.openapitools",
+            beanQualifiers                   : "false",
+            configPackage                    : "com.example.kotlinonspringboot.presentation.config",
+            delegatePattern                  : "false",
+            documentationProvider            : "springdoc",
+            enumPropertyNaming               : "camelCase",
+            exceptionHandler                 : "false",
+            gradleBuildFile                  : "false",
+            groupId                          : "org.openapitools",
+            interfaceOnly                    : "true",
+            library                          : "spring-boot",
+            modelMutable                     : "false",
+            modelPackage                     : "com.example.kotlinonspringboot.presentation.model",
+            packageName                      : "org.openapitools",
+            parcelizeModels                  : "null",
+            reactive                         : "false",
+            serializableModel                : "null",
+            serverPort                       : "8080",
+            serviceImplementation            : "false",
+            serviceInterface                 : "false",
+            skipDefaultInterface             : "false",
+            sortModelPropertiesByRequiredFlag: "null",
+            sortParamsByRequiredFlag         : "null",
+            sourceFolder                     : "src/main/kotlin",
+            title                            : "OpenAPI Kotlin Spring",
+            useBeanValidation                : "true",
+            useFeignClientUrl                : "true",
+            useSpringBoot3                   : "true",
+            useSwaggerUI                     : "true",
+            useTags                          : "true"
     ])
 }
 

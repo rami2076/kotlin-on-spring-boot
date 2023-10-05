@@ -1,0 +1,10 @@
+# Comma-separated list of rules to disable
+# Note that rules in any ruleset other than the standard ruleset will need to be prefixed
+# by the ruleset identifier.
+# ref: https://pinterest.github.io/ktlint/0.49.1/rules/configuration-ktlint/
+
+# Cause: Imports must be ordered in lexicographic order without any empty lines in-between with "java", "javax", "kotlin" and aliases in the end (import-ordering)
+# I'm Not Adjust Rule. Because, disabled it.
+# Actual:https://github.com/rami2076/kotlin-on-spring-boot/actions/runs/6417868641/job/17424476230?pr=38
+[*.{kt,kts}]
+ktlint_disabled_rules = import-ordering

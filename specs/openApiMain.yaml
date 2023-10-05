@@ -1,0 +1,238 @@
+openapi: "3.0.2"
+
+info:
+  title: OpenAPI Generator Kotlin Sample
+  description: OpenAPI Generator を用いた自動生成のサンプルコードです
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  version: "1.0"
+
+servers:
+  - url: http://localhost:8080/rami
+
+paths:
+  /v1/employee:
+    get:
+      tags:
+        - EmployeeSearch
+      summary: 社員の一覧取得
+      description: DB に登録されている社員を全て取得する
+      operationId: List
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeSearchResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+    post:
+      tags:
+        - EmployeeUpdate
+      summary: 社員の登録
+      description: 社員を登録する
+      operationId: Register
+      requestBody:
+        description: 社員登録リクエスト
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRegisterRequest'
+        required: true
+      responses:
+        201:
+          description: Created
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
+    put:
+      tags:
+        - EmployeeUpdate
+      summary: 社員の更新
+      description: 社員を更新する
+      operationId: Update
+      requestBody:
+        description: Employeeオブジェクト
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdateRequest'
+        required: true
+      responses:
+        204:
+          description: No Content
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '410':
+          description: 更新対象の社員の番号が該当なし
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
+  /v1/employee/{employeeNumber}:
+    delete:
+      tags:
+        - EmployeeUpdate
+      summary: 社員の削除
+      description: 社員を削除する
+      operationId: Delete
+      parameters:
+        - name: employeeNumber
+          in: path
+          description: 番号
+          required: true
+          schema:
+            type: number
+            maximum: 999999999
+            minimum: 0
+      responses:
+        204:
+          description: No Content
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
+    get:
+      tags:
+        - EmployeeSearch
+      summary: 社員のPK検索
+      description: 社員を検索する
+      operationId: get
+      parameters:
+        - name: employeeNumber
+          in: path
+          description: 番号
+          required: true
+          schema:
+            type: number
+            maximum: 999999999
+            minimum: 0
+      responses:
+        '200':
+          description: 単一のレスポンス結果を返却する．totalの値は1または0となる．
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeSearchResponse'
+        '400':
+          description: リクエストの不正
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '500':
+          description: DBエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+
+components:
+  schemas:
+    Employee:
+      required:
+        - employee_number
+        - full_name
+        - age
+        - email_address
+      type: object
+      properties:
+        employee_number:
+          type: number
+          maximum: 999999999
+          minimum: 0
+        full_name:
+          type: string
+          maxLength: 100
+          minLength: 2
+        age:
+          type: number
+          maximum: 200
+          minimum: 0
+        email_address:
+          type: string
+          format: email
+          minLength: 10
+
+    EmployeeSearchResponse:
+      required:
+        - employees
+        - total
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+        total:
+          type: number
+    EmployeeRegisterRequest:
+      required:
+        - full_name
+        - age
+        - email_address
+      type: object
+      properties:
+        full_name:
+          type: string
+          maxLength: 100
+          minLength: 2
+        age:
+          type: number
+          maximum: 200
+          minimum: 0
+        email_address:
+          type: string
+          format: email
+          minLength: 10
+    EmployeeUpdateRequest:
+      required:
+        - employee
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/Employee'
+    EmployeeServiceErrorResponse:
+      required:
+        - message
+      type: object
+      properties:
+        message:
+          type: string
+          default: "不適格なリクエストを検知しました"
