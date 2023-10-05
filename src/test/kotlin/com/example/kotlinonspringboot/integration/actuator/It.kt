@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.test.web.reactive.server.WebTestClient
 
-// TODO:なぜかActionsで動作しない
-@Disabled
+@Disabled("なぜかGiHub Actionsで動作しない")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class It {
     @Test
