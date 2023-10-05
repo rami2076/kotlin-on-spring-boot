@@ -76,5 +76,61 @@ class DeleteInEmployeeUpdateControllerTest {
                                 }"""
                 )
         }
+
+        @ParameterizedTest(name = "番号が{0}の時ステータス400と社員サービスエラーレスポンスを返すこと")
+        @DisplayName("パスパラメータの番号が不正な場合400を返すこと")
+        @CsvSource(
+            delimiter = '|',
+            textBlock =
+            // 説明     | 番号      |エラーメッセージ
+            """
+            文字種違反  |a          |Failed to convert value of type 'java.lang.String' to required type 'java.math.BigDecimal'; Character a is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark. 
+            閾値超過    |1000000000 |delete.employeeNumber: must be less than or equal to 999999999
+            閾値未満    |-1         |delete.employeeNumber: must be greater than or equal to 0"""
+        )
+        fun test3(
+            description: String,
+            number: String,
+            message: String,
+            @Autowired webClient: WebTestClient
+        ) {
+            // 実行 & 検証
+            webClient
+                .delete().uri("/api/v1/employee/$number")
+                .exchange()
+                .expectStatus().isBadRequest
+                .expectBody().json(
+                    """
+                                {
+                                  "message": "$message" 
+                                }"""
+                )
+        }
+
+        @ParameterizedTest(name = "番号が{0}の時ステータス204を返すこと")
+        @DisplayName("番号の閾値検査")
+        @CsvSource(
+            delimiter = '|',
+            textBlock =
+            // 説明     | 番号
+            """
+            minimum    |0 
+            maximum    |999999999"""
+        )
+        fun test4(
+            description: String,
+            number: String,
+            @Autowired webClient: WebTestClient
+        ) {
+            // 準備
+            // 社員削除ユースケースからの返却を定義
+            whenever(employeeDeleteUseCase.delete(any())).doReturn(true)
+
+            // 実行 & 検証
+            webClient
+                .delete().uri("/api/v1/employee/$number")
+                .exchange()
+                .expectStatus().isNoContent
+        }
     }
 }
