@@ -16,7 +16,10 @@ class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : Emplo
         TODO("Not yet implemented")
     }
 
-    override fun findAll(): List<Employee.RegisteredEmployee> {
+    /**
+     * キーの昇順でソートした登録済みの全社員を取得
+     */
+    override fun findAllSortedByKey(): List<Employee.RegisteredEmployee> {
         TODO("Not yet implemented")
     }
 

@@ -24,7 +24,7 @@ interface EmployeeRepository {
      * @return Case found Employees: Type: List<RegisteredEmployee>.
      * Case not found Employees: Type: EmptyList
      */
-    fun findAll(): List<Employee.RegisteredEmployee>
+    fun findAllSortedByKey(): List<Employee.RegisteredEmployee>
 
     /**
      * PK社員取得
