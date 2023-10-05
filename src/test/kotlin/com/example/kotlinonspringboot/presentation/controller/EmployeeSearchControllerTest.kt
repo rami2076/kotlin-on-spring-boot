@@ -133,11 +133,9 @@ class EmployeeSearchControllerTest {
         fun test4(@Autowired webClient: WebTestClient) {
             // 準備
             // 社員検索ユースケースからの返却を定義
-            whenever(employeeSearchUseCase.sortedSearch(any())).thenThrow(
-                EmployeeServiceException.EmployeeDataSourceException(
-                    RuntimeException("something error message")
-                )
-            )
+            val runtimeException = RuntimeException("something error message")
+            val exception = EmployeeServiceException.EmployeeDataSourceException(runtimeException)
+            whenever(employeeSearchUseCase.sortedSearch(any())).thenThrow(exception)
 
             // 実行 & 検証
             webClient
