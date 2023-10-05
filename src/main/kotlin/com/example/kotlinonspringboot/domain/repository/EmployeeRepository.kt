@@ -42,5 +42,4 @@ interface EmployeeRepository {
      * false, delete target absent and had deleted it.
      */
     fun deleteByKey(deleteCondition: DeleteCondition): Boolean
-
 }

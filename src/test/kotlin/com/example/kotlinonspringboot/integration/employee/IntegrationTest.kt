@@ -24,7 +24,7 @@ class IntegrationTest : DatabaseContainerConfiguration() {
         statements = [
             """
             INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (100, 'test1', 0, 'email@address.example');
-            INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (1, 'test1', 0, 'email@address@example')"""
+            INSERT INTO EMPLOYEE (EMPLOYEE_NUMBER, FULL_NAME, AGE, EMAIL_ADDRESS) VALUES (1, 'test1', 0, 'email@address.example')"""
         ]
     )
     @Sql(
@@ -52,13 +52,13 @@ class IntegrationTest : DatabaseContainerConfiguration() {
                                           "employee_number": 1,
                                           "full_name": "test1",
                                           "age": 0,
-                                          "email_address": "email@address1.example"
+                                          "email_address": "email@address.example"
                                         },
                                         {
                                           "employee_number": 100,
                                           "full_name": "test1",
                                           "age": 0,
-                                          "email_address": "email@address1.example"
+                                          "email_address": "email@address.example"
                                         }
                                       ],
                                       "total": 2
@@ -86,7 +86,7 @@ class IntegrationTest : DatabaseContainerConfiguration() {
                                           "employee_number": 1,
                                           "full_name": "test1",
                                           "age": 0,
-                                          "email_address": "email@address1.example"
+                                          "email_address": "email@address.example"
                                         }
                                       ],
                                       "total": 1

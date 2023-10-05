@@ -27,3 +27,12 @@ https://qiita.com/kazuki43zoo/items/9dfe35c47b08ce5f2ebb
     - [x] R: Multi select.
     - [x] U: Single update by pk.
     - [x] D: Single select by pk.
+
+- [x] どこでExceptionを投げるか決める
+    - update
+        - 社員該当なし例外
+            - これもリポジトリかな
+    - それ以外は普通にありうる
+        - Repository層かなで社員データソース例外
+
+- [ ] リポジトリのテストが必要

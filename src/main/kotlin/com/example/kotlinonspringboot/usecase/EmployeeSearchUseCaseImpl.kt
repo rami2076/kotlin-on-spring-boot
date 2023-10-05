@@ -1,32 +1,28 @@
 package com.example.kotlinonspringboot.usecase
 
 import com.example.kotlinonspringboot.domain.model.Employee
-import com.example.kotlinonspringboot.domain.model.EmployeeNumber
 import com.example.kotlinonspringboot.domain.model.condition.SearchCondition
+import com.example.kotlinonspringboot.domain.repository.EmployeeRepository
 import com.example.kotlinonspringboot.domain.usecase.EmployeeSearchUseCase
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class EmployeeSearchUseCaseImpl :
-    EmployeeSearchUseCase {
+class EmployeeSearchUseCaseImpl(private val employeeRepository: EmployeeRepository) : EmployeeSearchUseCase {
 
+    @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun sortedSearch(searchCondition: SearchCondition): List<Employee.RegisteredEmployee> {
-        val employee1 = Employee.RegisteredEmployee(
-            employeeNumber = EmployeeNumber(1L),
-            fullName = "test1",
-            age = 0,
-            emailAddress = "email@address1.example"
-        )
-        val employee2 = Employee.RegisteredEmployee(
-            employeeNumber = EmployeeNumber(100L),
-            fullName = "test1",
-            age = 0,
-            emailAddress = "email@address1.example"
-        )
-
         return when (searchCondition) {
-            is SearchCondition.EmployeeAllSearchCondition -> listOf(employee1, employee2)
-            is SearchCondition.EmployeePKSearchCondition -> listOf(employee1)
+            is SearchCondition.EmployeeAllSearchCondition -> employeeRepository.findAllSortedByKey()
+            is SearchCondition.EmployeePKSearchCondition -> findByKey(searchCondition)
+        }
+    }
+
+    @Transactional(readOnly = true, rollbackFor = [Exception::class])
+    internal fun findByKey(employeePKSearchCondition: SearchCondition.EmployeePKSearchCondition): List<Employee.RegisteredEmployee> {
+        return when (val registeredEmployee = employeeRepository.findByKey(employeePKSearchCondition)) {
+            null -> emptyList()
+            else -> listOf(registeredEmployee)
         }
     }
 }
