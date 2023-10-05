@@ -28,7 +28,7 @@ class EmployeeSearchControllerTest {
 
     @Nested
     @DisplayName("PK社員検索")
-    inner class List {
+    inner class Get {
         @ParameterizedTest(name = "パスパラメータの番号が{0}の時、社員エラーレスポンスが返却されること")
         @CsvSource(
             delimiter = '|',

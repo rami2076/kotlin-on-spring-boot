@@ -89,6 +89,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmployeeServiceErrorResponse'
+        '410':
+          description: 更新対象の社員の番号が該当なし
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeServiceErrorResponse'
 
   /v1/employee/{employeeNumber}:
     delete:
@@ -231,3 +237,4 @@ components:
       properties:
         message:
           type: string
+          default: "不適格なリクエストを検知しました"
