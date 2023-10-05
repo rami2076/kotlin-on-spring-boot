@@ -1,6 +1,7 @@
 package com.example.kotlinonspringboot.domain.repository
 
 import com.example.kotlinonspringboot.domain.model.Employee
+import com.example.kotlinonspringboot.domain.model.condition.DeleteCondition
 import com.example.kotlinonspringboot.domain.model.condition.SearchCondition
 
 interface EmployeeRepository {
@@ -33,4 +34,13 @@ interface EmployeeRepository {
      * Case not found Employees: Type: Nullable RegisteredEmployee
      */
     fun findByKey(searchPKSearchCondition: SearchCondition.EmployeePKSearchCondition): Employee.RegisteredEmployee?
+
+    /**
+     * PK社員削除
+     * @param deleteCondition 削除条件
+     * @return true, delete target exist and deleted.
+     * false, delete target absent and had deleted it.
+     */
+    fun deleteByKey(deleteCondition: DeleteCondition): Boolean
+
 }

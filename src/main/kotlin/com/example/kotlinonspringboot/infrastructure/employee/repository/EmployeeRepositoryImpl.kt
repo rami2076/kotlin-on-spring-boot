@@ -1,6 +1,7 @@
 package com.example.kotlinonspringboot.infrastructure.employee.repository
 
 import com.example.kotlinonspringboot.domain.model.Employee
+import com.example.kotlinonspringboot.domain.model.condition.DeleteCondition
 import com.example.kotlinonspringboot.domain.model.condition.SearchCondition
 import com.example.kotlinonspringboot.domain.repository.EmployeeRepository
 import com.example.kotlinonspringboot.infrastructure.employee.datasource.mapper.EmployeeMapper
@@ -24,6 +25,10 @@ class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : Emplo
     }
 
     override fun findByKey(searchPKSearchCondition: SearchCondition.EmployeePKSearchCondition): Employee.RegisteredEmployee? {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteByKey(deleteCondition: DeleteCondition): Boolean {
         TODO("Not yet implemented")
     }
 }
