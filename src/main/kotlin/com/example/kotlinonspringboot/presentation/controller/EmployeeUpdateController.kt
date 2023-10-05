@@ -1,8 +1,10 @@
 package com.example.kotlinonspringboot.presentation.controller
 
+import com.example.kotlinonspringboot.domain.model.Employee
 import com.example.kotlinonspringboot.domain.model.EmployeeNumber
 import com.example.kotlinonspringboot.domain.model.condition.DeleteCondition
 import com.example.kotlinonspringboot.domain.usecase.EmployeeDeleteUseCase
+import com.example.kotlinonspringboot.domain.usecase.EmployeeRegisterUseCase
 import com.example.kotlinonspringboot.presentation.api.EmployeeUpdateApi
 import com.example.kotlinonspringboot.presentation.model.EmployeeRegisterRequest
 import com.example.kotlinonspringboot.presentation.model.EmployeeUpdateRequest
@@ -13,10 +15,22 @@ import java.math.BigDecimal
 
 @RestController
 class EmployeeUpdateController(
-    private val employeeDeleteUseCase: EmployeeDeleteUseCase
+    private val employeeDeleteUseCase: EmployeeDeleteUseCase,
+    private val employeeRegisterUseCase: EmployeeRegisterUseCase
 ) : EmployeeUpdateApi {
 
     override fun register(employeeRegisterRequest: EmployeeRegisterRequest): ResponseEntity<Unit> {
+        // 変換
+        val (fullName, age, emailAddress) = employeeRegisterRequest
+        val unRegisterEmployee =
+            Employee.UnRegisteredEmployee(
+                fullName = fullName,
+                age = age.shortValueExact(),
+                emailAddress = emailAddress
+            )
+
+        employeeRegisterUseCase.register(unRegisterEmployee)
+
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 

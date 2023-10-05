@@ -188,7 +188,6 @@ components:
         email_address:
           type: string
           format: email
-          maxLength: 254
           minLength: 10
 
     EmployeeSearchResponse:
@@ -221,7 +220,6 @@ components:
         email_address:
           type: string
           format: email
-          maxLength: 254
           minLength: 10
     EmployeeUpdateRequest:
       required:
