@@ -12,6 +12,8 @@ ext {
     mybatisSpringBootStarterVersion = "3.0.2"
     springModulithBomVersion = "1.0.1"
     archunitVersion = '1.1.0'
+    springdocVersion = '2.2.0'
+    mockitoKotlinVersion = '5.1.0'
 }
 
 
@@ -44,7 +46,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
 
 
     //container
@@ -52,6 +54,7 @@ dependencies {
 
     //web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     //data
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootStarterVersion}"
@@ -68,6 +71,8 @@ dependencies {
     testImplementation "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${mybatisSpringBootStarterVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${mockitoKotlinVersion}"
+
 
     //kotlin-module
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
