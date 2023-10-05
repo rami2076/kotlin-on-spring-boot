@@ -108,9 +108,7 @@ class EmployeeSearchControllerTest {
 
         @Test
         @DisplayName("検索結果が0件の場合、OKを返し、社員検索リクエストを返却する")
-        fun test3(
-            @Autowired webClient: WebTestClient
-        ) {
+        fun test3(@Autowired webClient: WebTestClient) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(emptyList())
@@ -132,9 +130,7 @@ class EmployeeSearchControllerTest {
 
         @Test
         @DisplayName("ユースケース実行時にEmployeeDataSourceExceptionが発生した場合、500を返却すること")
-        fun test4(
-            @Autowired webClient: WebTestClient
-        ) {
+        fun test4(@Autowired webClient: WebTestClient) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             whenever(employeeSearchUseCase.sortedSearch(any())).thenThrow(
@@ -153,6 +149,103 @@ class EmployeeSearchControllerTest {
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
                                 }"""
+                )
+        }
+    }
+
+    @Nested
+    @DisplayName("全件検索")
+    inner class List {
+
+        @Test
+        @DisplayName("ユースケース実行時にEmployeeDataSourceExceptionが発生した場合、500を返却すること")
+        fun test1(@Autowired webClient: WebTestClient) {
+            // 準備
+            // 社員検索ユースケースからの返却を定義
+            val runtimeException = RuntimeException("something error message")
+            val exception = EmployeeServiceException.EmployeeDataSourceException(runtimeException)
+            whenever(employeeSearchUseCase.sortedSearch(any())).thenThrow(exception)
+
+            // 実行 & 検証
+            webClient
+                .get().uri("/api/v1/employee")
+                .exchange()
+                .expectStatus().is5xxServerError
+                .expectBody().json(
+                    """
+                                {
+                                  "message": "databaseで予期しない例外が発生しました" 
+                                }"""
+                )
+        }
+
+        @Test
+        @DisplayName("検索結果が0件の場合、社員検索レスポンスとHTTPステータス200を返却すること")
+        fun test2(@Autowired webClient: WebTestClient) {
+            // 準備
+            // 社員検索ユースケースからの返却を定義
+            whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(emptyList())
+
+            // 実行 & 検証
+            webClient
+                .get().uri("/api/v1/employee")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody().json(
+                    """
+                                {
+                                  "employees": [],
+                                  "total": 0
+                                }"""
+                )
+        }
+
+        @Test
+        @DisplayName("検索結果が2件の場合、OKを返し、社員検索リクエストを返却する")
+        fun test3(@Autowired webClient: WebTestClient) {
+            // 準備
+            // 社員検索ユースケースからの返却を定義
+            val employees = listOf(
+                Employee.RegisteredEmployee(
+                    employeeNumber = EmployeeNumber(1),
+                    fullName = "test1",
+                    age = 0,
+                    emailAddress = "email@address1.example"
+                ),
+                Employee.RegisteredEmployee(
+                    employeeNumber = EmployeeNumber(100),
+                    fullName = "test1",
+                    age = 0,
+                    emailAddress = "email@address1.example"
+                )
+            )
+
+            whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(employees)
+
+            // 実行 & 検証
+            webClient
+                .get().uri("/api/v1/employee")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody().json(
+                    """
+                                {
+                                      "employees": [
+                                        {
+                                          "employee_number": 1,
+                                          "full_name": "test1",
+                                          "age": 0,
+                                          "email_address": "email@address1.example"
+                                        },
+                                        {
+                                          "employee_number": 100,
+                                          "full_name": "test1",
+                                          "age": 0,
+                                          "email_address": "email@address1.example"
+                                        }
+                                      ],
+                                      "total": 2
+                                    }"""
                 )
         }
     }
