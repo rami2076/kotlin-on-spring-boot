@@ -16,10 +16,8 @@ ext {
     mockitoKotlinVersion = '5.1.0'
 }
 
-
 group = 'com.example'
 version = '0.0.1'
-
 
 java {
     toolchain {
@@ -58,6 +56,8 @@ dependencies {
 
     //data
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootStarterVersion}"
+    implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.0'
+
 
     //monitor
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -72,7 +72,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${mockitoKotlinVersion}"
-
 
     //kotlin-module
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
