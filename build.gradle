@@ -105,14 +105,14 @@ jar {
 }
 
 openApiValidate {
-    inputSpec.set("$rootDir/specs/openApiMain.yaml")
+    inputSpec.set("$rootDir/docs/swagger/specs/openApiMain.yaml")
 }
 
 //https://openapi-generator.tech/docs/generators/kotlin-spring/
 openApiGenerate {
     generatorName.set("kotlin-spring")
     outputDir.set("$rootDir/build/generated")
-    inputSpec.set("$rootDir/specs/openApiMain.yaml")
+    inputSpec.set("$rootDir/docs/swagger/specs/openApiMain.yaml")
     configOptions.set([
             additionalModelTypeAnnotations   : "null",
             annotationLibrary                : "swagger2",
