@@ -83,6 +83,13 @@ docker-compose down
 
 ## Swagger
 
+### github-pages
+
+現在はローカル起動用のサーバしか対応していない。  
+https://rami2076.github.io/kotlin-on-spring-boot/swagger/
+
 ### Local
 
 [Swagger-UI](http://localhost:8080/rami/swagger-ui/index.html)
+
+
