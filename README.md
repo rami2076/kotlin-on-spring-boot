@@ -85,13 +85,17 @@ docker-compose down
 
 ### github-pages
 
-ローカル以外も実行できるように変更
+デモ用のRenderのサーバとローカル起動サーバでSwaggerにてエンドポイントの確認が行える
 https://rami2076.github.io/kotlin-on-spring-boot/swagger/
 
 ### Local
 
+ローカルで確認する時は下記
 [Swagger-UI](http://localhost:8080/rami/swagger-ui/index.html)
 
-### Render
+## Render
+
+サーバのデプロイにRenderを利用している。
+以下はデプロイ後の Health CheckへのURL
 
 https://emloyee-service.onrender.com/rami/actuator/health
