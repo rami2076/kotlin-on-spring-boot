@@ -1,3 +1,4 @@
+-- Ref: Copy to src/main/resources/schema.sql
 use mydatabase;
 CREATE TABLE EMPLOYEE
 (
