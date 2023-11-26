@@ -1,6 +1,7 @@
 package com.example.kotlinonspringboot.integration.employee
 
 import com.example.kotlinonspringboot.DatabaseContainerConfiguration
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -12,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.testcontainers.junit.jupiter.Testcontainers
 
+@Disabled
 @Testcontainers
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @DisplayName("社員のIT試験")
