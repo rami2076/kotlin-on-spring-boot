@@ -1,4 +1,5 @@
 -- Ref: Copy from src/test/resources/datasource/init_ddl.sql
+-- H2用に編集しています
 create table EMPLOYEE
 (
     EMPLOYEE_NUMBER int          not null AUTO_INCREMENT,
