@@ -4,6 +4,7 @@ COPY ./ /home/app
 RUN cd /home/app && \
     ls -ltr &&  \
     pwd && \
+    chown 755 ./gradlew && \
     ./gradlew build -x runKtlintCheckOverMainSourceSet --stacktrace
 
 FROM amazoncorretto:17-alpine
