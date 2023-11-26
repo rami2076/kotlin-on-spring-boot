@@ -10,6 +10,7 @@ info:
 
 servers:
   - url: http://localhost:8080/rami/api
+  - url: https://emloyee-service.onrender.com/rami/api
 
 paths:
   /v1/employee:
