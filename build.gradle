@@ -13,7 +13,7 @@ ext {
     springModulithBomVersion = "1.1.0"
     archunitVersion = '1.2.1'
     springdocVersion = '2.3.0'
-    mockitoKotlinVersion = '5.1.0'
+    mockitoKotlinVersion = '5.2.1'
 }
 
 group = 'com.example'
