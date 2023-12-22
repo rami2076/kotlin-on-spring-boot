@@ -10,7 +10,7 @@ plugins {
 
 ext {
     mybatisSpringBootStarterVersion = "3.0.3"
-    springModulithBomVersion = "1.1.0"
+    springModulithBomVersion = "1.1.1"
     archunitVersion = '1.2.1'
     springdocVersion = '2.3.0'
     mockitoKotlinVersion = '5.2.1'
