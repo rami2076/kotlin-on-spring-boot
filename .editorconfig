@@ -8,3 +8,4 @@
 # Actual:https://github.com/rami2076/kotlin-on-spring-boot/actions/runs/6417868641/job/17424476230?pr=38
 [*.{kt,kts}]
 ktlint_disabled_rules = import-ordering
+ktlint_code_style = ktlint_official

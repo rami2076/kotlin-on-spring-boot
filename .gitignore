@@ -18,13 +18,22 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/codeStyles/Project.xml
 *.iws
 *.iml
 *.ipr
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/compiler.xml
+.idea/dataSources.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
+.idea/kotlinc.xml
+.idea/misc.xml
+.idea/vcs.xml
+
 
 ### NetBeans ###
 /nbproject/private/
