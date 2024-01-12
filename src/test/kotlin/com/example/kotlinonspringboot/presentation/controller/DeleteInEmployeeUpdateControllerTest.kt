@@ -37,7 +37,7 @@ class DeleteInEmployeeUpdateControllerTest {
             textBlock = """
             削除フラグ|説明        
             true  |削除あり
-            false |削除対象なし"""
+            false |削除対象なし""",
         )
         @DisplayName("削除時に例外が出ない場合、204を返却すること")
         fun test1(
