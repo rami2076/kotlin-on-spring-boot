@@ -5,12 +5,11 @@ import com.example.kotlinonspringboot.presentation.model.EmployeeSearchResponse
 import java.math.BigDecimal
 
 class EmployeeSearchResponseFactory {
-
     companion object {
         fun empty(): EmployeeSearchResponse {
             return EmployeeSearchResponse(
                 employees = emptyList(),
-                total = BigDecimal.ZERO
+                total = BigDecimal.ZERO,
             )
         }
 
@@ -19,7 +18,7 @@ class EmployeeSearchResponseFactory {
 
             return EmployeeSearchResponse(
                 employees = listOf(employee),
-                total = BigDecimal.ONE
+                total = BigDecimal.ONE,
             )
         }
 
@@ -28,7 +27,7 @@ class EmployeeSearchResponseFactory {
 
             return EmployeeSearchResponse(
                 employees = employees,
-                total = employees.size.toBigDecimal()
+                total = employees.size.toBigDecimal(),
             )
         }
     }

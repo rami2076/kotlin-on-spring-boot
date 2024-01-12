@@ -24,25 +24,26 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @AutoConfigureMockMvc
 @DisplayName("社員削除コントローラのテスト")
 class DeleteInEmployeeUpdateControllerTest {
-
     @MockBean
     private lateinit var employeeDeleteUseCase: EmployeeDeleteUseCase
 
     @Nested
     @DisplayName("PK社員削除")
     inner class Delete {
-
         @ParameterizedTest(name = "削除対象:{1}の場合、例外が発生しない場合は204を返却する")
         @CsvSource(
             delimiter = '|',
-            textBlock =
-            // 削除対象の有無
-            """
+            textBlock = """
+            # 削除フラグ|説明        
             true  |削除あり
-            false |削除対象なし"""
+            false |削除対象なし""",
         )
         @DisplayName("削除時に例外が出ない場合、204を返却すること")
-        fun test1(isDelete: Boolean, description: String, @Autowired webClient: WebTestClient) {
+        fun test1(
+            isDelete: Boolean,
+            description: String,
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員削除ユースケースからの返却を定義
             whenever(employeeDeleteUseCase.delete(any())).doReturn(isDelete)
@@ -56,7 +57,9 @@ class DeleteInEmployeeUpdateControllerTest {
 
         @Test
         @DisplayName("社員データソース例外が発生した場合、ステータス500をが返却すること")
-        fun test2(@Autowired webClient: WebTestClient) {
+        fun test2(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員削除ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -73,7 +76,7 @@ class DeleteInEmployeeUpdateControllerTest {
                     """
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
-                                }"""
+                                }""",
                 )
         }
 
@@ -81,18 +84,17 @@ class DeleteInEmployeeUpdateControllerTest {
         @DisplayName("パスパラメータの番号が不正な場合400を返すこと")
         @CsvSource(
             delimiter = '|',
-            textBlock =
-            // 説明     | 番号      |エラーメッセージ
-            """
+            textBlock = """
+            #説明     |番号      |エラーメッセージ
             文字種違反  |a          |Failed to convert value of type 'java.lang.String' to required type 'java.math.BigDecimal'; Character a is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark. 
             閾値超過    |1000000000 |delete.employeeNumber: must be less than or equal to 999999999
-            閾値未満    |-1         |delete.employeeNumber: must be greater than or equal to 0"""
+            閾値未満    |-1         |delete.employeeNumber: must be greater than or equal to 0""",
         )
         fun test3(
             description: String,
             number: String,
             message: String,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient
@@ -103,7 +105,7 @@ class DeleteInEmployeeUpdateControllerTest {
                     """
                                 {
                                   "message": "$message" 
-                                }"""
+                                }""",
                 )
         }
 
@@ -111,16 +113,15 @@ class DeleteInEmployeeUpdateControllerTest {
         @DisplayName("番号の閾値検査")
         @CsvSource(
             delimiter = '|',
-            textBlock =
-            // 説明     | 番号
-            """
+            textBlock = """
+            # 説明     | 番号
             minimum    |0 
-            maximum    |999999999"""
+            maximum    |999999999""",
         )
         fun test4(
             description: String,
             number: String,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 準備
             // 社員削除ユースケースからの返却を定義

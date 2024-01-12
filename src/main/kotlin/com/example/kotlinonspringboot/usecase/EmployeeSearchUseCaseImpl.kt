@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EmployeeSearchUseCaseImpl(private val employeeRepository: EmployeeRepository) : EmployeeSearchUseCase {
-
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun sortedSearch(searchCondition: SearchCondition): List<Employee.RegisteredEmployee> {
         return when (searchCondition) {

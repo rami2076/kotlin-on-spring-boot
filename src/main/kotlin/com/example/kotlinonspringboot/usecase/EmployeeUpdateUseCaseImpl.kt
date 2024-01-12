@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EmployeeUpdateUseCaseImpl(private val employeeRepository: EmployeeRepository) : EmployeeUpdateUseCase {
-
     /**
      * 更新ユースケース
      * @param willRenewEmployee 更新予定社員

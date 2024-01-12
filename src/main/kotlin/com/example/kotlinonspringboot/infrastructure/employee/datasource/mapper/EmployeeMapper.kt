@@ -15,23 +15,32 @@ interface EmployeeMapper {
     @Select(
         """
         SELECT EMPLOYEE_NUMBER, FULL_NAME,AGE,EMAIL_ADDRESS FROM EMPLOYEE
-         WHERE EMPLOYEE_NUMBER = #{employeeNumber}"""
+         WHERE EMPLOYEE_NUMBER = #{employeeNumber}""",
     )
     fun findByKey(employeeNumber: Long): EmployeeEntity?
 
     @Insert("INSERT INTO EMPLOYEE ( FULL_NAME,AGE,EMAIL_ADDRESS) value(#{fullName},#{age},#{emailAddress})")
-    fun insert(fullName: String, age: Short, emailAddress: String): Int
+    fun insert(
+        fullName: String,
+        age: Short,
+        emailAddress: String,
+    ): Int
 
     @Update(
         """
         UPDATE EMPLOYEE SET FULL_NAME= #{fullName}, AGE= #{age}, EMAIL_ADDRESS = #{emailAddress}
-         WHERE EMPLOYEE_NUMBER = #{employeeNumber}"""
+         WHERE EMPLOYEE_NUMBER = #{employeeNumber}""",
     )
-    fun update(employeeNumber: Long, fullName: String, age: Short, emailAddress: String): Int
+    fun update(
+        employeeNumber: Long,
+        fullName: String,
+        age: Short,
+        emailAddress: String,
+    ): Int
 
     @Delete(
         """
-        DELETE FROM EMPLOYEE WHERE EMPLOYEE_NUMBER = #{employeeNumber}"""
+        DELETE FROM EMPLOYEE WHERE EMPLOYEE_NUMBER = #{employeeNumber}""",
     )
     fun delete(employeeNumber: Long): Int
 }

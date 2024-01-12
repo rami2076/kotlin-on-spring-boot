@@ -11,7 +11,9 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class It {
     @Test
-    fun exampleTest(@Autowired webClient: WebTestClient) {
+    fun exampleTest(
+        @Autowired webClient: WebTestClient,
+    ) {
         webClient
             .get().uri("/actuator/health")
             .exchange()

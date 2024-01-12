@@ -3,7 +3,6 @@ package com.example.kotlinonspringboot.domain.usecase
 import com.example.kotlinonspringboot.domain.model.condition.DeleteCondition
 
 interface EmployeeDeleteUseCase {
-
     /**
      * 削除ユースケース
      * @param deleteCondition 削除条件

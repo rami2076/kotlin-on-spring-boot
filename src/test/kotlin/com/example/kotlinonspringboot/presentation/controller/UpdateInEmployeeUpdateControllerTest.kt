@@ -2,7 +2,6 @@ package com.example.kotlinonspringboot.presentation.controller
 
 import com.example.kotlinonspringboot.domain.model.EmployeeServiceException
 import com.example.kotlinonspringboot.domain.usecase.EmployeeUpdateUseCase
-import java.util.stream.Stream
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -20,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
+import java.util.stream.Stream
 
 /**
  * メソッドが多いのでテストクラスを分割している
@@ -28,7 +28,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @AutoConfigureMockMvc
 @DisplayName("PK社員更新コントローラのテスト")
 class UpdateInEmployeeUpdateControllerTest {
-
     @MockBean
     private lateinit var employeeUpdateUseCase: EmployeeUpdateUseCase
 
@@ -43,10 +42,11 @@ class UpdateInEmployeeUpdateControllerTest {
     @Nested
     @DisplayName("社員更新")
     inner class Update {
-
         @Test
         @DisplayName("更新時に、例外が発生しない場合は204を返却する")
-        fun test1(@Autowired webClient: WebTestClient) {
+        fun test1(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 実行 & 検証
             webClient.put().uri("/api/v1/employee")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -60,14 +60,16 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isNoContent
         }
 
         @Test
         @DisplayName("社員データソース例外が発生した場合、ステータス500をが返却すること")
-        fun test2(@Autowired webClient: WebTestClient) {
+        fun test2(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員更新ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -87,7 +89,7 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().is5xxServerError
                 .expectStatus().isEqualTo(500)
@@ -95,13 +97,15 @@ class UpdateInEmployeeUpdateControllerTest {
                     """
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
-                                }"""
+                                }""",
                 )
         }
 
         @Test
         @DisplayName("社員該当なし例外が発生した場合、ステータス410をが返却すること")
-        fun test2_1(@Autowired webClient: WebTestClient) {
+        fun test2_1(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員更新ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -121,14 +125,14 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isEqualTo(410)
                 .expectBody().json(
                     """
                                 {
                                   "message": "社員更新中に対象の番号の社員が該当しませんでした" 
-                                }"""
+                                }""",
                 )
         }
 
@@ -139,7 +143,7 @@ class UpdateInEmployeeUpdateControllerTest {
             description: String,
             employeeNumber: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.put().uri("/api/v1/employee")
@@ -154,7 +158,7 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -165,7 +169,7 @@ class UpdateInEmployeeUpdateControllerTest {
                 Arguments.of("閾値最大", "999999999", 204),
                 Arguments.of("閾値超過", "1000000000", 400),
                 Arguments.of("閾値未満", "-1", 400),
-                Arguments.of("形式エラー", "\"a\"", 400)
+                Arguments.of("形式エラー", "\"a\"", 400),
             )
         }
 
@@ -176,7 +180,7 @@ class UpdateInEmployeeUpdateControllerTest {
             description: String,
             fullName: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.put().uri("/api/v1/employee")
@@ -191,7 +195,7 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -201,7 +205,7 @@ class UpdateInEmployeeUpdateControllerTest {
                 Arguments.of("閾値最小", "1".repeat(2), 204),
                 Arguments.of("閾値最大", "1".repeat(100), 204),
                 Arguments.of("閾値超過", "1".repeat(101), 400),
-                Arguments.of("閾値未満", "1".repeat(1), 400)
+                Arguments.of("閾値未満", "1".repeat(1), 400),
             )
         }
 
@@ -212,7 +216,7 @@ class UpdateInEmployeeUpdateControllerTest {
             description: String,
             age: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.put().uri("/api/v1/employee")
@@ -227,7 +231,7 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "email@address.example"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -237,7 +241,7 @@ class UpdateInEmployeeUpdateControllerTest {
                 Arguments.of("閾値最小", "0", 204),
                 Arguments.of("閾値最大", "200", 204),
                 Arguments.of("閾値超過", "201", 400),
-                Arguments.of("閾値未満", "-1", 400)
+                Arguments.of("閾値未満", "-1", 400),
             )
         }
 
@@ -248,7 +252,7 @@ class UpdateInEmployeeUpdateControllerTest {
             description: String,
             emailAddress: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.put().uri("/api/v1/employee")
@@ -263,7 +267,7 @@ class UpdateInEmployeeUpdateControllerTest {
                         "email_address": "$emailAddress"
                       }
                     }
-                    """.trimIndent()
+                    """.trimIndent(),
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -272,7 +276,7 @@ class UpdateInEmployeeUpdateControllerTest {
             return Stream.of(
                 Arguments.of("閾値最小(10)", "a@ex.apple", 204),
                 Arguments.of("閾値未満(9)", "a@exapple", 400),
-                Arguments.of("使用可能文字", "abcdefghijklmnopqrstuvwxyz1234567890-_@exapple", 204)
+                Arguments.of("使用可能文字", "abcdefghijklmnopqrstuvwxyz1234567890-_@exapple", 204),
             )
         }
     }

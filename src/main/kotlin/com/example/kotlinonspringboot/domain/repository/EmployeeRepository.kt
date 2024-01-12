@@ -5,7 +5,6 @@ import com.example.kotlinonspringboot.domain.model.condition.DeleteCondition
 import com.example.kotlinonspringboot.domain.model.condition.SearchCondition
 
 interface EmployeeRepository {
-
     /**
      * 未登録社員の登録
      * @param unRegisteredEmployee 未登録社員
