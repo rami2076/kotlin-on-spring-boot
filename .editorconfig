@@ -8,3 +8,7 @@
 # Actual:https://github.com/rami2076/kotlin-on-spring-boot/actions/runs/6417868641/job/17424476230?pr=38
 [*.{kt,kts}]
 ktlint_disabled_rules = import-ordering
+# https://pinterest.github.io/ktlint/1.0.1/rules/code-styles/
+# https://pinterest.github.io/ktlint/1.0.1/rules/configuration-intellij-idea/
+# intellij_idea or android_studio or ktlint_official (default)
+ktlint_code_style = ktlint_official

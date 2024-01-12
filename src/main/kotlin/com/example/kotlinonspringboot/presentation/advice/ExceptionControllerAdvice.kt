@@ -14,7 +14,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @ControllerAdvice
 class ExceptionControllerAdvice {
-
     val logger: Logger = LoggerFactory.getLogger(ExceptionControllerAdvice::class.java)
 
     @ExceptionHandler(ConstraintViolationException::class)
@@ -30,28 +29,32 @@ class ExceptionControllerAdvice {
     }
 
     internal fun badRequest(message: String?): ResponseEntity<EmployeeServiceErrorResponse> {
-        val errorResponse = when (message) {
-            null -> EmployeeServiceErrorResponse()
-            else -> EmployeeServiceErrorResponse(message)
-        }
+        val errorResponse =
+            when (message) {
+                null -> EmployeeServiceErrorResponse()
+                else -> EmployeeServiceErrorResponse(message)
+            }
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(EmployeeServiceException::class)
     fun handleIllegalStateException(ex: EmployeeServiceException): ResponseEntity<EmployeeServiceErrorResponse> {
-        val (level, httpStatus, message) = when (ex) {
-            is EmployeeServiceException.EmployeeDataSourceException -> Triple(
-                Level.ERROR,
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                "databaseで予期しない例外が発生しました"
-            )
+        val (level, httpStatus, message) =
+            when (ex) {
+                is EmployeeServiceException.EmployeeDataSourceException ->
+                    Triple(
+                        Level.ERROR,
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "databaseで予期しない例外が発生しました",
+                    )
 
-            is EmployeeServiceException.EmployeeUpdateNotApplicableException -> Triple(
-                Level.WARN,
-                HttpStatus.GONE,
-                "社員更新中に対象の番号の社員が該当しませんでした"
-            )
-        }
+                is EmployeeServiceException.EmployeeUpdateNotApplicableException ->
+                    Triple(
+                        Level.WARN,
+                        HttpStatus.GONE,
+                        "社員更新中に対象の番号の社員が該当しませんでした",
+                    )
+            }
         logger.atLevel(level).log(message, ex)
         val errorResponse = EmployeeServiceErrorResponse(message)
         return ResponseEntity(errorResponse, httpStatus)

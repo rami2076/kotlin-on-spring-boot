@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EmployeeDeleteUseCaseImpl(private val employeeRepository: EmployeeRepository) : EmployeeDeleteUseCase {
-
     /**
      * PK社員削除
      * @param deleteCondition 削除条件

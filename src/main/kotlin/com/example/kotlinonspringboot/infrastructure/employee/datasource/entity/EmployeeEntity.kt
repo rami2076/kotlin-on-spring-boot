@@ -4,5 +4,5 @@ data class EmployeeEntity(
     val employeeNumber: Long,
     val fullName: String,
     val age: Short,
-    val emailAddress: String
+    val emailAddress: String,
 )

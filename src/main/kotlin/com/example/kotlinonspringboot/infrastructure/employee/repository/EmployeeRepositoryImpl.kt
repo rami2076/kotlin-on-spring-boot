@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : EmployeeRepository {
-
     /**
      * 社員登録
      *
@@ -45,7 +44,9 @@ class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : Emplo
             if (0 != updatedCount) {
                 return true
             }
-            throw EmployeeServiceException.EmployeeUpdateNotApplicableException(RuntimeException("更新対象の社員の番号が存在しませんでした。employeeNumber:${employeeNumber.value}"))
+            throw EmployeeServiceException.EmployeeUpdateNotApplicableException(
+                RuntimeException("更新対象の社員の番号が存在しませんでした。employeeNumber:${employeeNumber.value}"),
+            )
         } catch (ex: Exception) {
             throw EmployeeServiceException.EmployeeDataSourceException(ex)
         }
@@ -65,7 +66,7 @@ class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : Emplo
                     employeeNumber = EmployeeNumber(employeeNumber),
                     fullName = fullName,
                     age = age,
-                    emailAddress = emailAddress
+                    emailAddress = emailAddress,
                 )
             }
         } catch (ex: Exception) {
@@ -85,14 +86,15 @@ class EmployeeRepositoryImpl(private val employeeMapper: EmployeeMapper) : Emplo
 
             return when (employeeEntity) {
                 null -> null
-                else -> employeeEntity.let {
-                    Employee.RegisteredEmployee(
-                        employeeNumber = EmployeeNumber(it.employeeNumber),
-                        fullName = it.fullName,
-                        age = it.age,
-                        emailAddress = it.emailAddress
-                    )
-                }
+                else ->
+                    employeeEntity.let {
+                        Employee.RegisteredEmployee(
+                            employeeNumber = EmployeeNumber(it.employeeNumber),
+                            fullName = it.fullName,
+                            age = it.age,
+                            emailAddress = it.emailAddress,
+                        )
+                    }
             }
         } catch (ex: Exception) {
             throw EmployeeServiceException.EmployeeDataSourceException(ex)

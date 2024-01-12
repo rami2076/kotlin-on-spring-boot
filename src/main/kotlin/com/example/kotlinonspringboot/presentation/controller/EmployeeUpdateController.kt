@@ -18,9 +18,8 @@ import java.math.BigDecimal
 class EmployeeUpdateController(
     private val employeeDeleteUseCase: EmployeeDeleteUseCase,
     private val employeeRegisterUseCase: EmployeeRegisterUseCase,
-    private val employeeUpdateUseCase: EmployeeUpdateUseCase
+    private val employeeUpdateUseCase: EmployeeUpdateUseCase,
 ) : EmployeeUpdateApi {
-
     override fun register(employeeRegisterRequest: EmployeeRegisterRequest): ResponseEntity<Unit> {
         // 変換
         val (fullName, age, emailAddress) = employeeRegisterRequest
@@ -28,7 +27,7 @@ class EmployeeUpdateController(
             Employee.UnRegisteredEmployee(
                 fullName = fullName,
                 age = age.shortValueExact(),
-                emailAddress = emailAddress
+                emailAddress = emailAddress,
             )
 
         employeeRegisterUseCase.register(unRegisterEmployee)
@@ -52,7 +51,7 @@ class EmployeeUpdateController(
                 employeeNumber = EmployeeNumber(employeeNumber.toLong()),
                 fullName = fullName,
                 age = age.shortValueExact(),
-                emailAddress = emailAddress
+                emailAddress = emailAddress,
             )
 
         employeeUpdateUseCase.update(willRenewEmployee)

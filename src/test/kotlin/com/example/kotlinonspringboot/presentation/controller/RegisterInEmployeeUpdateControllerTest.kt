@@ -28,7 +28,6 @@ import java.util.stream.Stream
 @AutoConfigureMockMvc
 @DisplayName("社員登録コントローラのテスト")
 class RegisterInEmployeeUpdateControllerTest {
-
     @MockBean
     private lateinit var employeeRegisterUseCase: EmployeeRegisterUseCase
 
@@ -43,25 +42,28 @@ class RegisterInEmployeeUpdateControllerTest {
     @Nested
     @DisplayName("社員登録")
     inner class Register {
-
         @Test
         @DisplayName("登録時に、例外が発生しない場合は204を返却する")
-        fun test1(@Autowired webClient: WebTestClient) {
+        fun test1(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 実行 & 検証
             webClient.post().uri("/api/v1/employee").contentType(MediaType.APPLICATION_JSON).bodyValue(
                 """
-                    {
-                      "full_name": "full_name",
-                      "age": 20,
-                      "email_address": "email@address.example"
-                    }
-                """.trimIndent()
+                {
+                  "full_name": "full_name",
+                  "age": 20,
+                  "email_address": "email@address.example"
+                }
+                """.trimIndent(),
             ).exchange().expectStatus().isCreated
         }
 
         @Test
         @DisplayName("社員データソース例外が発生した場合、ステータス500をが返却すること")
-        fun test2(@Autowired webClient: WebTestClient) {
+        fun test2(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員削除ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -78,7 +80,7 @@ class RegisterInEmployeeUpdateControllerTest {
                       "age": 20,
                       "email_address": "email@address.example"
                     }
-                    """
+                    """,
                 ).exchange()
                 .expectStatus().is5xxServerError
                 .expectStatus().isEqualTo(500)
@@ -86,7 +88,7 @@ class RegisterInEmployeeUpdateControllerTest {
                     """
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
-                                }"""
+                                }""",
                 )
         }
 
@@ -97,7 +99,7 @@ class RegisterInEmployeeUpdateControllerTest {
             description: String,
             fullName: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.post().uri("/api/v1/employee")
@@ -109,7 +111,7 @@ class RegisterInEmployeeUpdateControllerTest {
                       "age": 20,
                       "email_address": "email@address.example"
                     }
-                    """
+                    """,
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -122,9 +124,8 @@ class RegisterInEmployeeUpdateControllerTest {
                 Arguments.of(
                     "閾値未満",
                     "1".repeat(1),
-                    400
-                )
-
+                    400,
+                ),
             )
         }
 
@@ -135,7 +136,7 @@ class RegisterInEmployeeUpdateControllerTest {
             description: String,
             age: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.post().uri("/api/v1/employee")
@@ -147,7 +148,7 @@ class RegisterInEmployeeUpdateControllerTest {
                       "age": $age,
                       "email_address": "email@address.example"
                     }
-                    """
+                    """,
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -160,8 +161,8 @@ class RegisterInEmployeeUpdateControllerTest {
                 Arguments.of(
                     "閾値未満",
                     "-1",
-                    400
-                )
+                    400,
+                ),
             )
         }
 
@@ -172,7 +173,7 @@ class RegisterInEmployeeUpdateControllerTest {
             description: String,
             emailAddress: String,
             httpStatus: Int,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient.post().uri("/api/v1/employee")
@@ -184,7 +185,7 @@ class RegisterInEmployeeUpdateControllerTest {
                       "age": 20,
                       "email_address": "$emailAddress"
                     }
-                    """
+                    """,
                 ).exchange()
                 .expectStatus().isEqualTo(httpStatus)
         }
@@ -195,13 +196,13 @@ class RegisterInEmployeeUpdateControllerTest {
                 Arguments.of(
                     "閾値未満(9)",
                     "a@exapple",
-                    400
+                    400,
                 ),
                 Arguments.of(
                     "使用可能文字",
                     "abcdefghijklmnopqrstuvwxyz1234567890-_@exapple",
-                    201
-                )
+                    201,
+                ),
             )
         }
     }

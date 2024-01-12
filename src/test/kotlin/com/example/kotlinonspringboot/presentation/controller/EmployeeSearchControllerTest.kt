@@ -22,7 +22,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @AutoConfigureMockMvc
 @DisplayName("社員検索コントローラのテスト")
 class EmployeeSearchControllerTest {
-
     @MockBean
     private lateinit var employeeSearchUseCase: EmployeeSearchUseCase
 
@@ -32,19 +31,19 @@ class EmployeeSearchControllerTest {
         @ParameterizedTest(name = "パスパラメータの番号が{0}の時、社員エラーレスポンスが返却されること")
         @CsvSource(
             delimiter = '|',
-            textBlock =
-            // 説明     | 番号      |エラーメッセージ
-            """
+            useHeadersInDisplayName = true,
+            textBlock = """
+            説明     | 番号      |エラーメッセージ
             文字種違反  |a          |Failed to convert value of type 'java.lang.String' to required type 'java.math.BigDecimal'; Character a is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark. 
             閾値超過    |1000000000 |get.employeeNumber: must be less than or equal to 999999999
-            閾値未満    |-1         |get.employeeNumber: must be greater than or equal to 0"""
+            閾値未満    |-1         |get.employeeNumber: must be greater than or equal to 0""",
         )
         @DisplayName("BadRequestのテスト")
         fun test1(
             description: String,
             number: String,
             message: String,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 実行 & 検証
             webClient
@@ -55,33 +54,34 @@ class EmployeeSearchControllerTest {
                     """
                                 {
                                   "message": "$message" 
-                                }"""
+                                }""",
                 )
         }
 
         @ParameterizedTest(name = "パスパラメータの番号の{0}である{1}の時、社員検索レスポンスが返却されること")
         @CsvSource(
             delimiter = '|',
-            textBlock =
-            // 説明     | 番号
-            """
+            useHeadersInDisplayName = true,
+            textBlock = """
+            # 説明     | 番号
             minimum    |0 
-            maximum    |999999999"""
+            maximum    |999999999""",
         )
         @DisplayName("OKのテスト")
         fun test2(
             description: String,
             number: String,
-            @Autowired webClient: WebTestClient
+            @Autowired webClient: WebTestClient,
         ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
-            val employee = Employee.RegisteredEmployee(
-                employeeNumber = EmployeeNumber(number.toLong()),
-                fullName = "test1",
-                age = 0,
-                emailAddress = "email@address1.example"
-            )
+            val employee =
+                Employee.RegisteredEmployee(
+                    employeeNumber = EmployeeNumber(number.toLong()),
+                    fullName = "test1",
+                    age = 0,
+                    emailAddress = "email@address1.example",
+                )
             whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(listOf(employee))
 
             // 実行 & 検証
@@ -102,13 +102,15 @@ class EmployeeSearchControllerTest {
                                   ],
                                   "total": 1
                                 }
-                                """
+                                """,
                 )
         }
 
         @Test
         @DisplayName("検索結果が0件の場合、OKを返し、社員検索リクエストを返却する")
-        fun test3(@Autowired webClient: WebTestClient) {
+        fun test3(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(emptyList())
@@ -124,13 +126,15 @@ class EmployeeSearchControllerTest {
                                   "employees": [],
                                   "total": 0
                                 }
-                                """
+                                """,
                 )
         }
 
         @Test
         @DisplayName("ユースケース実行時にEmployeeDataSourceExceptionが発生した場合、500を返却すること")
-        fun test4(@Autowired webClient: WebTestClient) {
+        fun test4(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -146,7 +150,7 @@ class EmployeeSearchControllerTest {
                     """
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
-                                }"""
+                                }""",
                 )
         }
     }
@@ -154,10 +158,11 @@ class EmployeeSearchControllerTest {
     @Nested
     @DisplayName("全件検索")
     inner class List {
-
         @Test
         @DisplayName("ユースケース実行時にEmployeeDataSourceExceptionが発生した場合、500を返却すること")
-        fun test1(@Autowired webClient: WebTestClient) {
+        fun test1(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             val runtimeException = RuntimeException("something error message")
@@ -173,13 +178,15 @@ class EmployeeSearchControllerTest {
                     """
                                 {
                                   "message": "databaseで予期しない例外が発生しました" 
-                                }"""
+                                }""",
                 )
         }
 
         @Test
         @DisplayName("検索結果が0件の場合、社員検索レスポンスとHTTPステータス200を返却すること")
-        fun test2(@Autowired webClient: WebTestClient) {
+        fun test2(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
             whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(emptyList())
@@ -194,29 +201,32 @@ class EmployeeSearchControllerTest {
                                 {
                                   "employees": [],
                                   "total": 0
-                                }"""
+                                }""",
                 )
         }
 
         @Test
         @DisplayName("検索結果が2件の場合、OKを返し、社員検索リクエストを返却する")
-        fun test3(@Autowired webClient: WebTestClient) {
+        fun test3(
+            @Autowired webClient: WebTestClient,
+        ) {
             // 準備
             // 社員検索ユースケースからの返却を定義
-            val employees = listOf(
-                Employee.RegisteredEmployee(
-                    employeeNumber = EmployeeNumber(1),
-                    fullName = "test1",
-                    age = 0,
-                    emailAddress = "email@address1.example"
-                ),
-                Employee.RegisteredEmployee(
-                    employeeNumber = EmployeeNumber(100),
-                    fullName = "test1",
-                    age = 0,
-                    emailAddress = "email@address1.example"
+            val employees =
+                listOf(
+                    Employee.RegisteredEmployee(
+                        employeeNumber = EmployeeNumber(1),
+                        fullName = "test1",
+                        age = 0,
+                        emailAddress = "email@address1.example",
+                    ),
+                    Employee.RegisteredEmployee(
+                        employeeNumber = EmployeeNumber(100),
+                        fullName = "test1",
+                        age = 0,
+                        emailAddress = "email@address1.example",
+                    ),
                 )
-            )
 
             whenever(employeeSearchUseCase.sortedSearch(any())).doReturn(employees)
 
@@ -243,7 +253,7 @@ class EmployeeSearchControllerTest {
                                         }
                                       ],
                                       "total": 2
-                                    }"""
+                                    }""",
                 )
         }
     }

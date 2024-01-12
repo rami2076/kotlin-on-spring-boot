@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EmployeeRegisterUseCaseImpl(private val employeeRepository: EmployeeRepository) : EmployeeRegisterUseCase {
-
     /**
      * 登録ユースケース
      * @param unRegisteredEmployee 未登録社員
