@@ -33,10 +33,11 @@ class DeleteInEmployeeUpdateControllerTest {
         @ParameterizedTest(name = "削除対象:{1}の場合、例外が発生しない場合は204を返却する")
         @CsvSource(
             delimiter = '|',
+            useHeadersInDisplayName = true,
             textBlock = """
-            # 削除フラグ|説明        
+            削除フラグ|説明        
             true  |削除あり
-            false |削除対象なし""",
+            false |削除対象なし"""
         )
         @DisplayName("削除時に例外が出ない場合、204を返却すること")
         fun test1(
@@ -84,8 +85,9 @@ class DeleteInEmployeeUpdateControllerTest {
         @DisplayName("パスパラメータの番号が不正な場合400を返すこと")
         @CsvSource(
             delimiter = '|',
+            useHeadersInDisplayName = true,
             textBlock = """
-            #説明     |番号      |エラーメッセージ
+            説明     |番号      |エラーメッセージ
             文字種違反  |a          |Failed to convert value of type 'java.lang.String' to required type 'java.math.BigDecimal'; Character a is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark. 
             閾値超過    |1000000000 |delete.employeeNumber: must be less than or equal to 999999999
             閾値未満    |-1         |delete.employeeNumber: must be greater than or equal to 0""",
@@ -113,8 +115,9 @@ class DeleteInEmployeeUpdateControllerTest {
         @DisplayName("番号の閾値検査")
         @CsvSource(
             delimiter = '|',
+            useHeadersInDisplayName = true,
             textBlock = """
-            # 説明     | 番号
+            説明     | 番号
             minimum    |0 
             maximum    |999999999""",
         )

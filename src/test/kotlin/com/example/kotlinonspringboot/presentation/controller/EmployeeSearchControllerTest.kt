@@ -31,8 +31,9 @@ class EmployeeSearchControllerTest {
         @ParameterizedTest(name = "パスパラメータの番号が{0}の時、社員エラーレスポンスが返却されること")
         @CsvSource(
             delimiter = '|',
+            useHeadersInDisplayName = true,
             textBlock = """
-            #説明     | 番号      |エラーメッセージ
+            説明     | 番号      |エラーメッセージ
             文字種違反  |a          |Failed to convert value of type 'java.lang.String' to required type 'java.math.BigDecimal'; Character a is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark. 
             閾値超過    |1000000000 |get.employeeNumber: must be less than or equal to 999999999
             閾値未満    |-1         |get.employeeNumber: must be greater than or equal to 0""",
@@ -60,6 +61,7 @@ class EmployeeSearchControllerTest {
         @ParameterizedTest(name = "パスパラメータの番号の{0}である{1}の時、社員検索レスポンスが返却されること")
         @CsvSource(
             delimiter = '|',
+            useHeadersInDisplayName = true,
             textBlock = """
             # 説明     | 番号
             minimum    |0 
